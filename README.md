@@ -27,6 +27,10 @@ Los controles se seleccionaron tomando como referencia buenas prácticas de endu
 | FortiGate | 2/5 | 5/5 |
 | **Total** | **8/15** | **15/15** |
 
+![Comparación de los 15 controles antes y después del hardening](evidencias/comparacion_antes_despues.svg)
+
+*Figura 1. Evolución de la auditoría automática de los tres dispositivos.*
+
 Las mediciones corresponden a los **15 controles programados**. Entre las siete diferencias encontradas, **seis fueron corregidas con cambios de configuración** y una se resolvió ajustando la comprobación de TLS del script para reconocer TLS 1.2 como válido.
 
 ## Topología GNS3
