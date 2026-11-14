@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 260">
+  <rect width="800" height="260" rx="18" fill="#0e1925"/>
+  <text x="32" y="43" font-family="Arial,sans-serif" font-weight="bold" font-size="24" fill="white">Auditoría de hardening — 15 controles</text>
+  <text x="32" y="85" font-family="Arial,sans-serif" font-size="16" fill="#b5c7d9">Antes</text>
+  <rect x="143" y="69" rx="7" width="450" height="24" fill="#3c5062"/><rect x="143" y="69" rx="7" width="240" height="24" fill="#c58b43"/>
+  <text x="615" y="87" font-family="Arial,sans-serif" font-weight="bold" font-size="18" fill="#f7dfbf">8 / 15</text>
+  <text x="32" y="141" font-family="Arial,sans-serif" font-size="16" fill="#b5c7d9">Después</text>
+  <rect x="143" y="125" rx="7" width="450" height="24" fill="#2e9968"/>
+  <text x="615" y="144" font-family="Arial,sans-serif" font-weight="bold" font-size="18" fill="#acebc8">15 / 15</text>
+  <text x="32" y="205" font-family="Arial,sans-serif" font-size="14" fill="#9eb1c2">R1: 4→5    ·    SW1: 2→5    ·    FortiGate: 2→5</text>
+  <text x="32" y="234" font-family="Arial,sans-serif" font-size="13" fill="#8aa0b3">Controles seleccionados del script; no equivalen al cumplimiento íntegro de CIS.</text>
+</svg>

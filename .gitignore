@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+.venv/
+venv/
+.env
+*.pem
+*.key
+*.p12
+*.pfx
+respaldos_privados_NO_SUBIR/
+informes_hardening/respaldos_privados_NO_SUBIR/
