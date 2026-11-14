@@ -1,12 +1,12 @@
 # Hardening de red con Cisco, FortiGate y Python
 
-## 🎥 Video demostrativo
+## Video demostrativo
 
-**[▶ Ver la práctica de hardening en YouTube](https://youtu.be/PTBqgQA67To)**
+**[Ver demostración de hardening en YouTube](https://youtu.be/PTBqgQA67To)**
 
 Demostración del router, switch y firewall implementados en GNS3, de los controles de seguridad seleccionados y de la automatización mediante Python y Netmiko.
 
-**[📄 Consultar la documentación completa en PDF (25 páginas)](Documentacion_Hardening_CIS_Oliver_Eliam_Aquino_Paulino.pdf)**
+**[Consultar documentación técnica en PDF (25 páginas)](Documentacion_Hardening_CIS_Oliver_Eliam_Aquino_Paulino.pdf)**
 
 **Estudiante:** Oliver Eliam Aquino Paulino  
 **Matrícula:** 2024-1571  
@@ -31,7 +31,7 @@ Los controles se seleccionaron tomando como referencia buenas prácticas de endu
 
 ![Comparación de los 15 controles antes y después del hardening](evidencias/comparacion_antes_despues.svg)
 
-*Figura 1. Evolución de la auditoría automática de los tres dispositivos.*
+*Comparación de resultados de auditoría inicial y posterior.*
 
 Las mediciones corresponden a los **15 controles programados**. Entre las siete diferencias encontradas, **seis fueron corregidas con cambios de configuración** y una se resolvió ajustando la comprobación de TLS del script para reconocer TLS 1.2 como válido.
 
@@ -39,7 +39,7 @@ Las mediciones corresponden a los **15 controles programados**. Entre las siete 
 
 ![Topología real del laboratorio en GNS3](evidencias/01_topologia_gns3.png)
 
-*Figura 1. Captura original con R1, SW1, FortiGate y Cloud1.*
+*Topología implementada con R1, SW1, FortiGate y Cloud1.*
 
 ```mermaid
 flowchart TB
@@ -126,7 +126,7 @@ py .\scripts\hardening_cis.py
 
 ![Menú real del script de hardening](evidencias/02_menu_auditoria.png)
 
-*Figura 2. Menú de la herramienta en PowerShell.*
+*Menú de la herramienta de auditoría y aplicación de medidas.*
 
 El programa ofrece:
 
@@ -139,21 +139,18 @@ Las contraseñas se introducen durante la ejecución y no aparecen incrustadas e
 
 ![Aplicación automática de controles en el laboratorio](evidencias/04_aplicacion_hardening.png)
 
-*La captura muestra la ejecución original de las correcciones. La incidencia posterior de TLS se documenta como parte de las pruebas y se solucionó antes de la auditoría final.*
+*Aplicación automática de las correcciones. En la prueba intermedia se identificó una incompatibilidad del parámetro TLS que se resolvió antes de la auditoría final.*
 
 ## Evidencias de la práctica
 
-**[Informe inicial — 8 cumplen, 7 pendientes](informes/01_Auditoria_inicial_8_de_15_RECONSTRUIDA.txt)**  
-**[Informe final — 15 cumplen, 0 pendientes, 0 errores](informes/02_Auditoria_final_15_de_15.txt)**
+**[Informe inicial — 8 cumplen, 7 pendientes](informes/Auditoria_inicial_8_de_15.txt)**  
+**[Informe final — 15 cumplen, 0 pendientes, 0 errores](informes/Auditoria_final_15_de_15.txt)**
 
-El primero es una transcripción documentada a partir de la salida inicial del programa. El segundo conserva la salida del TXT final recibido, incluida su hora de ejecución.
+Los informes presentan los resultados de las verificaciones inicial y posterior, incluyendo el estado de los controles y sus evidencias.
 
 **Pruebas directas:** `show ip http server status`, `show running-config | section line vty`, `show running-config | include service timestamps log` y `show full-configuration system global | grep admin-`.
 
-### Galería complementaria de capturas originales
-
-<details>
-<summary>Mostrar pruebas adicionales de R1, SW1 y el ajuste de TLS</summary>
+### Capturas adicionales de verificación
 
 **Continuación de las pruebas de R1**
 
@@ -165,17 +162,16 @@ El primero es una transcripción documentada a partir de la salida inicial del p
 
 **Incidencia intermedia de TLS en FortiGate**
 
-![Error inicial del parámetro TLS 1.3 y resultado intermedio](evidencias/05_error_tlv_fortigate.png)
+![Error inicial del parámetro TLS 1.3 y resultado intermedio](evidencias/05_validacion_tls_fortigate.png)
 
-</details>
 
 ## Configuraciones completas y anexos
 
-**[📄 PDF técnico con anexos completos de R1, SW1 y sección global de FortiGate](Documentacion_Hardening_CIS_Oliver_Eliam_Aquino_Paulino.pdf)**
+**[Documento técnico con configuraciones y evidencias](Documentacion_Hardening_CIS_Oliver_Eliam_Aquino_Paulino.pdf)**
 
 
-- [R1 — running-config completo, copia literal recibida](running-configs/R1_running-config_COMPLETO.txt)
-- [SW1 — running-config completo, copia literal recibida](running-configs/SW1_running-config_COMPLETO.txt)
+- [R1 — configuración completa de ejecución](running-configs/R1_running-config_COMPLETO.txt)
+- [SW1 — configuración completa de ejecución](running-configs/SW1_running-config_COMPLETO.txt)
 - [FortiGate — sección system global completa](running-configs/FortiGate_system_global_FULL.txt)
 - [FortiGate — configuración observada de interfaces](running-configs/FortiGate_system_interface.txt)
 - [Informe técnico: recomendaciones, justificaciones y resultados](docs/Informe_tecnico_Hardening.md)
@@ -183,7 +179,7 @@ El primero es una transcripción documentada a partir de la salida inicial del p
 - [Registro de evidencias y resultados](docs/Registro_de_evidencias.md)
 - [Video de la demostración](https://youtu.be/PTBqgQA67To)
 
-**Nota sobre integridad:** R1 y SW1 son transcripciones completas de `show running-config` y conservan todas las líneas que entregaste, incluidos los hashes de autenticación. Como el repositorio es público, se recomienda cambiar esas credenciales del laboratorio. La configuración completa del apartado `system global` de FortiGate **no equivale** a un `show full-configuration` de todo el equipo; se aportan las secciones obtenidas en el laboratorio. 
+**Alcance de los anexos:** R1 y SW1 contienen la salida completa de `show running-config`. Para FortiGate se incluyen las secciones `system global` y `system interface`, correspondientes a las comprobaciones realizadas. 
 
 ## Conclusión
 
