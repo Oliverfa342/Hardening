@@ -6,6 +6,8 @@
 
 Demostración del router, switch y firewall implementados en GNS3, de los controles de seguridad seleccionados y de la automatización mediante Python y Netmiko.
 
+**[📄 Consultar la documentación completa en PDF (25 páginas)](Documentacion_Hardening_CIS_Oliver_Eliam_Aquino_Paulino.pdf)**
+
 **Estudiante:** Oliver Eliam Aquino Paulino  
 **Matrícula:** 2024-1571  
 **Asignatura:** Seguridad de Redes  
@@ -35,6 +37,10 @@ Las mediciones corresponden a los **15 controles programados**. Entre las siete 
 
 ## Topología GNS3
 
+![Topología real del laboratorio en GNS3](evidencias/01_topologia_gns3.png)
+
+*Figura 1. Captura original con R1, SW1, FortiGate y Cloud1.*
+
 ```mermaid
 flowchart TB
   R1["R1 · Router Cisco 7200<br/>Fa0/0 · 10.15.71.1/24"]
@@ -58,6 +64,16 @@ El switch actúa como punto central de la LAN de administración. Cloud1 conecta
 | SW1 | Vlan1 | `10.15.71.2/24` | Switching y acceso administrativo |
 | FortiGate | port1 | `10.15.71.3/24` | Administración HTTPS/SSH |
 | Windows 11 | VMware VMnet2 | `10.15.71.10/24` | Host de automatización |
+
+### Comprobación visual: antes y después
+
+**Auditoría inicial — 8 de 15 controles conformes:**
+
+![Auditoría inicial de los controles en Python](evidencias/03_auditoria_inicial_8de15.png)
+
+**Auditoría final — 15 de 15 controles conformes:**
+
+![Auditoría posterior con todos los controles conformes](evidencias/06_auditoria_final_15de15.png)
 
 ## Controles de hardening
 
@@ -83,6 +99,20 @@ El switch actúa como punto central de la LAN de administración. Cloud1 conecta
 
 `C-01` y `F-01` son **códigos internos del script**, no identificadores oficiales de CIS. Las justificaciones y pruebas de cada uno están desarrolladas en el [informe técnico](docs/Informe_tecnico_Hardening.md).
 
+### Pruebas directas sobre los dispositivos
+
+**Router R1 — administración HTTP/HTTPS, VTY y SSH:**
+
+![Consola del router mostrando servicios HTTP y HTTPS deshabilitados](evidencias/07_pruebas_r1_http_y_vty.png)
+
+**Switch SW1 — acceso administrativo y registro de eventos:**
+
+![Consola del switch mostrando SSH, timeout y timestamps](evidencias/10_pruebas_sw1_vty_y_logs.png)
+
+**FortiGate — bloqueo administrativo, SSH y TLS:**
+
+![Consola de FortiGate con controles administrativos aplicados](evidencias/11_pruebas_fortigate.png)
+
 ## Script de auditoría y remediación
 
 **[Ver código Python completo](scripts/hardening_cis.py)**
@@ -94,12 +124,22 @@ py -m pip install "netmiko[par4]"
 py .\scripts\hardening_cis.py
 ```
 
+![Menú real del script de hardening](evidencias/02_menu_auditoria.png)
+
+*Figura 2. Menú de la herramienta en PowerShell.*
+
 El programa ofrece:
 
 1. **SOLO AUDITAR:** consulta R1, SW1 y FortiGate; genera informe sin cambiar configuraciones.
 2. **RESPALDAR + AUDITAR + APLICAR + INFORME POSTERIOR:** crea respaldo, solicita confirmación, aplica controles pendientes y ejecuta una verificación posterior.
 
 Las contraseñas se introducen durante la ejecución y no aparecen incrustadas en el código. La compatibilidad `par4` se utiliza en el laboratorio para comunicarse con las implementaciones SSH antiguas de Cisco.
+
+### Ejecución de la opción 2
+
+![Aplicación automática de controles en el laboratorio](evidencias/04_aplicacion_hardening.png)
+
+*La captura muestra la ejecución original de las correcciones. La incidencia posterior de TLS se documenta como parte de las pruebas y se solucionó antes de la auditoría final.*
 
 ## Evidencias de la práctica
 
@@ -110,7 +150,29 @@ El primero es una transcripción documentada a partir de la salida inicial del p
 
 **Pruebas directas:** `show ip http server status`, `show running-config | section line vty`, `show running-config | include service timestamps log` y `show full-configuration system global | grep admin-`.
 
+### Galería complementaria de capturas originales
+
+<details>
+<summary>Mostrar pruebas adicionales de R1, SW1 y el ajuste de TLS</summary>
+
+**Continuación de las pruebas de R1**
+
+![Consola de R1, comprobación de líneas VTY](evidencias/08_pruebas_r1_continuacion.png)
+
+**Servicio HTTP/HTTPS de SW1**
+
+![Consola del switch, HTTP y HTTPS deshabilitados](evidencias/09_pruebas_sw1_http.png)
+
+**Incidencia intermedia de TLS en FortiGate**
+
+![Error inicial del parámetro TLS 1.3 y resultado intermedio](evidencias/05_error_tlv_fortigate.png)
+
+</details>
+
 ## Configuraciones completas y anexos
+
+**[📄 PDF técnico con anexos completos de R1, SW1 y sección global de FortiGate](Documentacion_Hardening_CIS_Oliver_Eliam_Aquino_Paulino.pdf)**
+
 
 - [R1 — running-config completo, copia literal recibida](running-configs/R1_running-config_COMPLETO.txt)
 - [SW1 — running-config completo, copia literal recibida](running-configs/SW1_running-config_COMPLETO.txt)
