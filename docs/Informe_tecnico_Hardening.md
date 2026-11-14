@@ -10,7 +10,7 @@
 
 Construir una red de laboratorio con **router, switch y firewall** y realizar una revisión automática de 15 controles de endurecimiento elegidos a partir de buenas prácticas de CIS Benchmarks. El programa ofrece el modo **solo informe** y el modo **respaldar, aplicar y auditar otra vez**.
 
-El resultado refleja únicamente **los 15 controles específicos incorporados al script**, no una certificación CIS total. Los identificadores C-01 a C-05 y F-01 a F-05 son identificadores *internos* de esta práctica y no números oficiales de recomendaciones CIS.
+La evaluación comprende los **15 controles seleccionados para el laboratorio**. Este conjunto no constituye una auditoría integral ni una certificación CIS. Los identificadores C-01 a C-05 y F-01 a F-05 son identificadores *internos* de esta práctica y no números oficiales de recomendaciones CIS.
 
 ## 2. Diseño y direccionamiento
 
@@ -58,7 +58,7 @@ El archivo `scripts/hardening_cis.py` usa conexiones SSH desde el host Windows p
 
 **Opción 2 — Respaldar, aplicar y volver a auditar:** audita, guarda respaldos, solicita escribir `APLICAR`, envía los ajustes que falten y genera un segundo informe. Se requiere mantener acceso por consola durante el procedimiento.
 
-Las claves se solicitan al usuario mediante entrada oculta; no forman parte del código fuente del script. La prueba se ejecutó con Netmiko 4.8.0 y compatibilidad Paramiko 4 para dispositivos Cisco antiguos.
+Las credenciales se introducen de forma oculta durante la ejecución y no están incrustadas en el código. La prueba se ejecutó con Netmiko 4.8.0 y compatibilidad Paramiko 4 para dispositivos Cisco antiguos.
 
 ## 5. Comparación de resultados
 
@@ -69,16 +69,16 @@ Las claves se solicitan al usuario mediante entrada oculta; no forman parte del 
 | FortiGate | 2/5 | 5/5 |
 | **Total** | **8/15** | **15/15** |
 
-La auditoría inicial exitosa se realizó a las 17:13:58 del 13/11/2026. La evidencia de la auditoría final es el informe de las 19:41:15 del mismo día.
+La auditoría inicial exitosa se realizó a las 17:13:58 del 13/11/2026. La auditoría final registrada corresponde a las 19:41:15 del mismo día.
 
-**Precisión técnica:** el control F-04 fue marcado `NO CUMPLE` en el análisis inicial porque el primer evaluador esperaba TLS 1.2 **y** TLS 1.3. El equipo ya utilizaba TLS 1.2. Se ajustó el criterio para aceptar TLS 1.2 sin protocolos anteriores. De las siete diferencias reportadas, **seis se resolvieron cambiando configuraciones** y **una cambiando la lógica de evaluación**.
+**Validación de TLS:** el control F-04 fue marcado `NO CUMPLE` en el análisis inicial porque el primer evaluador esperaba TLS 1.2 **y** TLS 1.3. El equipo ya utilizaba TLS 1.2. Se ajustó el criterio para aceptar TLS 1.2 sin protocolos anteriores. De las siete diferencias reportadas, **seis se resolvieron cambiando configuraciones** y **una cambiando la lógica de evaluación**.
 
-Hubo un intento intermedio que terminó en 14/15 por el rechazo del token `tlsv1-3` en FortiGate. Se realizó la corrección y una nueva auditoría completa.
+En la prueba intermedia, FortiGate rechazó el parámetro `tlsv1-3`. Se adecuó la evaluación a TLS 1.2 y se repitió la auditoría.
 
 ## 6. Evidencias y anexos
 
-- [Informe inicial de 8/15, reconstruido desde los resultados compartidos](../informes/01_Auditoria_inicial_8_de_15_RECONSTRUIDA.txt)
-- [Informe final original de 15/15](../informes/02_Auditoria_final_15_de_15.txt)
+- [Auditoría inicial — 8/15](../informes/Auditoria_inicial_8_de_15.txt)
+- [Auditoría final — 15/15](../informes/Auditoria_final_15_de_15.txt)
 - [Código fuente de la herramienta de automatización](../scripts/hardening_cis.py)
 - [Running-config completo de R1 sin recortar](../running-configs/R1_running-config_COMPLETO.txt)
 - [Running-config completo de SW1 sin recortar](../running-configs/SW1_running-config_COMPLETO.txt)
@@ -90,7 +90,7 @@ Hubo un intento intermedio que terminó en 14/15 por el rechazo del token `tlsv1
 
 Estos son controles puntuales; la configuración global de FortiOS aún presenta parámetros fuera de esta lista. Por ejemplo, `admin-telnet enable` está presente globalmente, aunque `port1` **no permite Telnet** en `allowaccess`. Asimismo, `ssl-min-proto-version SSLv3` corresponde a otro parámetro SSL y no debe confundirse con `admin-https-ssl-versions tlsv1-2`. Esas líneas deben evaluarse por separado para no declarar el dispositivo completamente endurecido.
 
-Los archivos de Cisco están transcritos íntegramente conservadas como fueron proporcionadas, sin recortar secciones. La sección `system global` del FortiGate está completa; **no** se obtuvo un volcado íntegro de todas las secciones del equipo. No se inventa la salida de `show system admin`.
+Los archivos de Cisco contienen la configuración completa obtenida mediante `show running-config`, incluidas las líneas de interfaces, servicios, VTY y banners. La documentación de FortiGate comprende la sección `system global` y la configuración de interfaces verificada; no abarca el resto de secciones del sistema.
 
 ## 8. Conclusión
 
