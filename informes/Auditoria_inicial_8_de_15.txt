@@ -1,0 +1,49 @@
+INFORME DE AUDITORÍA INICIAL
+Fecha: 2026-11-13 17:13:58
+Red: R1 10.15.71.1; SW1 10.15.71.2; FortiGate 10.15.71.3
+Referencia: resultados registrados durante la primera auditoría del laboratorio.
+Alcance: 15 controles internos seleccionados; no certificación CIS.
+
+RESUMEN: 8 CUMPLE | 7 NO CUMPLE | 0 ERROR
+
+R1 (4/5)
+[CUMPLE] C-01 Registros con fecha/hora y milisegundos
+  Evidencia: service timestamps log datetime msec
+[CUMPLE] C-02 Servicio HTTP administrativo deshabilitado
+  Evidencia: HTTP server status: Disabled
+[CUMPLE] C-03 Servicio HTTPS Cisco no requerido deshabilitado
+  Evidencia: HTTP secure server status: Disabled
+[CUMPLE] C-04 Acceso VTY solamente por SSH
+  Evidencia: 1 bloque VTY; SSH exclusivo: sí
+[NO CUMPLE] C-05 Inactividad VTY de hasta 5 minutos
+  Evidencia: 1 bloque VTY; timeout <= 5 min: no
+
+SW1 (2/5)
+[CUMPLE] C-01 Registros con fecha/hora y milisegundos
+  Evidencia: service timestamps log datetime msec
+[NO CUMPLE] C-02 Servicio HTTP administrativo deshabilitado
+  Evidencia: HTTP server status: Enabled
+[NO CUMPLE] C-03 Servicio HTTPS Cisco no requerido deshabilitado
+  Evidencia: HTTP secure server status: Enabled
+[CUMPLE] C-04 Acceso VTY solamente por SSH
+  Evidencia: 2 bloques VTY; SSH exclusivo: sí
+[NO CUMPLE] C-05 Inactividad VTY de hasta 5 minutos
+  Evidencia: 2 bloques VTY; timeout <= 5 min: no
+
+FortiGate (2/5)
+[NO CUMPLE] F-01 Bloqueo administrativo durante 300 segundos
+  Evidencia: admin-lockout-duration=60
+[CUMPLE] F-02 Máximo de tres intentos fallidos de login
+  Evidencia: admin-lockout-threshold=3
+[NO CUMPLE] F-03 Gracia de autenticación SSH de 30 segundos
+  Evidencia: admin-ssh-grace-time=120
+[NO CUMPLE] F-04 TLS administrativo
+  Evidencia: admin-https-ssl-versions=tlsv1-2
+  Observación: la comprobación inicial requería TLS 1.2 y TLS 1.3; el firewall
+  ya utilizaba TLS 1.2. El criterio se ajustó para comprobar que no se
+  admitieran versiones anteriores de TLS.
+[CUMPLE] F-05 SSH versión 1 deshabilitado
+  Evidencia: admin-ssh-v1=disable
+
+Comparación posterior: seis cambios de configuración y un ajuste en el
+criterio de validación de TLS.
