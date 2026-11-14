@@ -112,8 +112,8 @@ El primero es una transcripción documentada a partir de la salida inicial del p
 
 ## Configuraciones completas y anexos
 
-- [R1 — running-config completo, hashes ocultos](running-configs/R1_running-config_COMPLETO_SANITIZADO.txt)
-- [SW1 — running-config completo, hashes ocultos](running-configs/SW1_running-config_COMPLETO_SANITIZADO.txt)
+- [R1 — running-config completo, copia literal recibida](running-configs/R1_running-config_COMPLETO.txt)
+- [SW1 — running-config completo, copia literal recibida](running-configs/SW1_running-config_COMPLETO.txt)
 - [FortiGate — sección system global completa](running-configs/FortiGate_system_global_FULL.txt)
 - [FortiGate — configuración observada de interfaces](running-configs/FortiGate_system_interface.txt)
 - [Informe técnico: recomendaciones, justificaciones y resultados](docs/Informe_tecnico_Hardening.md)
@@ -121,7 +121,7 @@ El primero es una transcripción documentada a partir de la salida inicial del p
 - [Registro de evidencias y resultados](docs/Registro_de_evidencias.md)
 - [Video de la demostración](https://youtu.be/PTBqgQA67To)
 
-La configuración completa del apartado `system global` de FortiGate **no equivale** a un `show full-configuration` de todo el equipo; se aportan las secciones obtenidas en el laboratorio. Las configuraciones Cisco sí conservan íntegramente las líneas recibidas, salvo los secretos de autenticación.
+**Nota sobre integridad:** R1 y SW1 son transcripciones completas de `show running-config` y conservan todas las líneas que entregaste, incluidos los hashes de autenticación. Como el repositorio es público, se recomienda cambiar esas credenciales del laboratorio. La configuración completa del apartado `system global` de FortiGate **no equivale** a un `show full-configuration` de todo el equipo; se aportan las secciones obtenidas en el laboratorio. 
 
 ## Conclusión
 

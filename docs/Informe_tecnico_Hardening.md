@@ -80,8 +80,8 @@ Hubo un intento intermedio que terminó en 14/15 por el rechazo del token `tlsv1
 - [Informe inicial de 8/15, reconstruido desde los resultados compartidos](../informes/01_Auditoria_inicial_8_de_15_RECONSTRUIDA.txt)
 - [Informe final original de 15/15](../informes/02_Auditoria_final_15_de_15.txt)
 - [Código fuente de la herramienta de automatización](../scripts/hardening_cis.py)
-- [Running-config completo de R1 con secretos ocultos](../running-configs/R1_running-config_COMPLETO_SANITIZADO.txt)
-- [Running-config completo de SW1 con secretos ocultos](../running-configs/SW1_running-config_COMPLETO_SANITIZADO.txt)
+- [Running-config completo de R1 sin recortar](../running-configs/R1_running-config_COMPLETO.txt)
+- [Running-config completo de SW1 sin recortar](../running-configs/SW1_running-config_COMPLETO.txt)
 - [Configuración completa del apartado `system global` de FortiGate](../running-configs/FortiGate_system_global_FULL.txt)
 - [Configuración de interfaces observada en FortiGate](../running-configs/FortiGate_system_interface.txt)
 - [Guía de comandos de prueba](Comandos_de_verificacion.md)
@@ -90,7 +90,7 @@ Hubo un intento intermedio que terminó en 14/15 por el rechazo del token `tlsv1
 
 Estos son controles puntuales; la configuración global de FortiOS aún presenta parámetros fuera de esta lista. Por ejemplo, `admin-telnet enable` está presente globalmente, aunque `port1` **no permite Telnet** en `allowaccess`. Asimismo, `ssl-min-proto-version SSLv3` corresponde a otro parámetro SSL y no debe confundirse con `admin-https-ssl-versions tlsv1-2`. Esas líneas deben evaluarse por separado para no declarar el dispositivo completamente endurecido.
 
-Los archivos de Cisco están transcritos íntegramente salvo la ocultación de hashes/secretos. La sección `system global` del FortiGate está completa; **no** se obtuvo un volcado íntegro de todas las secciones del equipo. No se inventa la salida de `show system admin`.
+Los archivos de Cisco están transcritos íntegramente conservadas como fueron proporcionadas, sin recortar secciones. La sección `system global` del FortiGate está completa; **no** se obtuvo un volcado íntegro de todas las secciones del equipo. No se inventa la salida de `show system admin`.
 
 ## 8. Conclusión
 

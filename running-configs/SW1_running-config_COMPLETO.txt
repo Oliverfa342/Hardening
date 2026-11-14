@@ -16,9 +16,9 @@ boot-start-marker
 boot-end-marker
 !
 !
-enable secret 5 [HASH_OCULTO]
+enable secret 5 $1$3wBK$dvj31fDiZmhvXN8Z4C2J.1
 !
-username oliver privilege 15 secret 5 [HASH_OCULTO]
+username oliver privilege 15 secret 5 $1$D4ZZ$k8nwTOdV11w.uVzerCyTn1
 no aaa new-model
 !
 !

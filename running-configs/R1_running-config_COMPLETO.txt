@@ -14,7 +14,7 @@ boot-start-marker
 boot-end-marker
 !
 !
-enable secret 5 [HASH_OCULTO]
+enable secret 5 $1$DRli$wsjCIOpRHKEQzIPrVrbaq.
 !
 no aaa new-model
 no ip icmp rate-limit unreachable
@@ -38,7 +38,7 @@ multilink bundle-name authenticated
 !
 !
 !
-username oliver privilege 15 secret 5 [HASH_OCULTO]
+username oliver privilege 15 secret 5 $1$In1I$7tKwAqnpDOlWOvabC2z1F/
 !
 !
 !
