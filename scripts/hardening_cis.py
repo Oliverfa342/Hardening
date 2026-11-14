@@ -50,7 +50,7 @@ REGLAS_FORTI = [
 
 RAIZ = Path(__file__).resolve().parent
 SALIDAS = RAIZ / "informes_hardening"
-RESPALDOS = SALIDAS / "respaldos_privados_NO_SUBIR"
+RESPALDOS = SALIDAS / "respaldos_locales"
 
 
 def sello() -> str:
@@ -185,23 +185,23 @@ def auditar_equipo(conexion, equipo: dict, ruta: Path, guardar_copia: bool) -> L
         if not re.search(r"(?m)^hostname\s+\S+", config):
             raise RuntimeError("No se pudo leer running-config completo: revisa privilegio de SSH")
         if guardar_copia:
-            (RESPALDOS / f"{nombre}_running_config_ORIGINAL_PRIVADO.txt").write_text(config, encoding="utf-8")
-        (ruta / f"{nombre}_config_SANITIZADO.txt").write_text(redactar_config(config), encoding="utf-8")
+            (RESPALDOS / f"{nombre}_running_config_respaldo.txt").write_text(config, encoding="utf-8")
+        (ruta / f"{nombre}_config_revision.txt").write_text(redactar_config(config), encoding="utf-8")
         estado_http = conexion.send_command("show ip http server status", read_timeout=30)
         return evaluar_cisco(config, estado_http, nombre)
     config = conexion.send_command("show full-configuration system global", read_timeout=85)
     if "config system global" not in config or "set admintimeout" not in config:
         raise RuntimeError("FortiGate no devolvio la configuracion global completa")
     if guardar_copia:
-        (RESPALDOS / f"{nombre}_system_global_ORIGINAL_PRIVADO.txt").write_text(config, encoding="utf-8")
-    (ruta / f"{nombre}_global_SANITIZADO.txt").write_text(config, encoding="utf-8")
+        (RESPALDOS / f"{nombre}_system_global_respaldo.txt").write_text(config, encoding="utf-8")
+    (ruta / f"{nombre}_global_revision.txt").write_text(config, encoding="utf-8")
     return evaluar_forti(config, nombre)
 
 
 def guardar_informe(registros: List[dict], errores: List[str], nombre: str, carpeta: Path) -> Path:
     fecha = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     total = {e: sum(r["estado"] == e for r in registros) for e in ["CUMPLE", "NO CUMPLE", "ERROR"]}
-    contenido = [f"INFORME HARDENING - {nombre}", f"Fecha: {fecha}",
+    contenido = [f"INFORME DE HARDENING - {nombre}", f"Fecha: {fecha}",
                  "Laboratorio: R1 10.15.71.1; SW1 10.15.71.2; FortiGate 10.15.71.3",
                  "Alcance: controles seleccionados para la practica; no auditoria CIS certificada.",
                  f"Resumen: {total['CUMPLE']} cumplen; {total['NO CUMPLE']} no cumplen; {total['ERROR']} error(es)", "=" * 72]
@@ -210,8 +210,8 @@ def guardar_informe(registros: List[dict], errores: List[str], nombre: str, carp
                       f"  Objetivo: {item['esperado']}", f"  Evidencia: {item['evidencia']}", ""]
     if errores:
         contenido.extend(["ERRORES DE CONEXION O COMANDOS:"] + errores)
-    contenido += ["", "AVISO: Revisar el Benchmark CIS correspondiente antes de asignar IDs normativos.",
-                  "NO PUBLICAR los archivos en la carpeta respaldos_privados_NO_SUBIR."]
+    contenido += ["", "Referencia: controles identificados internamente como C-01 a F-05.",
+                  "Alcance: evaluación de los 15 controles definidos en la herramienta."]
     carpeta.mkdir(parents=True, exist_ok=True)
     salida = carpeta / f"{nombre}.txt"
     salida.write_text("\n".join(contenido) + "\n", encoding="utf-8")
@@ -356,11 +356,11 @@ def main() -> None:
         return
     if errores or any(fila["estado"] == "ERROR" for fila in datos) or len(datos) != 15:
         print("\n[DETENIDO] La auditoria inicial no se completo correctamente para todos los equipos.")
-        print("No aplicamos cambios. Revisa los errores e intenta nuevamente.")
+        print("No se aplicaron cambios debido a errores en la auditoria inicial.")
         return
     print("\nATENCION: la opcion 2 SI modifica configuraciones de R1, SW1 y FortiGate.")
     print(f"Copias iniciales guardadas en: {RESPALDOS}")
-    print("Mantente con la consola GNS3 disponible para recuperacion si algo falla.")
+    print("El acceso a consola GNS3 debe estar disponible durante la aplicacion.")
     confirmar = input('Para continuar escribe exactamente APLICAR: ').strip()
     if confirmar != "APLICAR":
         print("Cancelado. Las configuraciones permanecen sin modificar.")
@@ -371,10 +371,10 @@ def main() -> None:
     informe_posterior = guardar_informe(posteriores, errores_aplicar + errores_post,
                                        "informe_despues", carpeta_despues)
     print(f"\n[OK] Informe posterior: {informe_posterior}")
-    print("Compara antes/informe_antes.txt con despues/informe_despues.txt")
+    print("Informes para comparacion: carpetas antes/ y despues/.")
     if errores_aplicar or errores_post:
         print("[AVISO] Se detectaron errores: revisa el informe antes de declarar cumplimiento.")
-    print("\nRECUERDA: no publiques carpetas respaldos_privados_NO_SUBIR ni claves en GitHub.")
+    print("\n[INFO] Los respaldos se conservan localmente fuera del repositorio.")
 
 
 if __name__ == "__main__":
