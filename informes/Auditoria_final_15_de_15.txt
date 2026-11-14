@@ -1,0 +1,68 @@
+INFORME DE AUDITORÍA FINAL — HARDENING
+Fecha: 2026-11-13 19:41:15
+Laboratorio: R1 10.15.71.1; SW1 10.15.71.2; FortiGate 10.15.71.3
+Alcance: comprobación de 15 controles seleccionados de hardening.
+Resumen: 15 cumplen; 0 no cumplen; 0 error(es)
+========================================================================
+[CUMPLE] R1 - C-01: Registros con fecha/hora y milisegundos
+  Objetivo: service timestamps log datetime msec
+  Evidencia: service timestamps log datetime msec
+
+[CUMPLE] R1 - C-02: Servicio HTTP administrativo deshabilitado
+  Objetivo: no ip http server
+  Evidencia: show ip http server status: Disabled
+
+[CUMPLE] R1 - C-03: Servicio HTTPS Cisco no requerido deshabilitado
+  Objetivo: no ip http secure-server
+  Evidencia: show ip http server status: HTTPS Disabled
+
+[CUMPLE] R1 - C-04: Acceso VTY solamente por SSH
+  Objetivo: transport input ssh
+  Evidencia: 1 bloque VTY; SSH exclusivo: sí
+
+[CUMPLE] R1 - C-05: Inactividad de VTY: maximo 5 minutos
+  Objetivo: exec-timeout 5 0
+  Evidencia: 1 bloque VTY; timeout <= 5 min: sí
+
+[CUMPLE] SW1 - C-01: Registros con fecha/hora y milisegundos
+  Objetivo: service timestamps log datetime msec
+  Evidencia: service timestamps log datetime msec
+
+[CUMPLE] SW1 - C-02: Servicio HTTP administrativo deshabilitado
+  Objetivo: no ip http server
+  Evidencia: show ip http server status: Disabled
+
+[CUMPLE] SW1 - C-03: Servicio HTTPS Cisco no requerido deshabilitado
+  Objetivo: no ip http secure-server
+  Evidencia: show ip http server status: HTTPS Disabled
+
+[CUMPLE] SW1 - C-04: Acceso VTY solamente por SSH
+  Objetivo: transport input ssh
+  Evidencia: 2 bloques VTY; SSH exclusivo: sí
+
+[CUMPLE] SW1 - C-05: Inactividad de VTY: maximo 5 minutos
+  Objetivo: exec-timeout 5 0
+  Evidencia: 2 bloques VTY; timeout <= 5 min: sí
+
+[CUMPLE] FortiGate - F-01: Bloqueo administrativo durante 300 segundos
+  Objetivo: set admin-lockout-duration 300
+  Evidencia: admin-lockout-duration=300
+
+[CUMPLE] FortiGate - F-02: Maximo 3 intentos de login fallidos
+  Objetivo: set admin-lockout-threshold 3
+  Evidencia: admin-lockout-threshold=3
+
+[CUMPLE] FortiGate - F-03: Gracia de autenticacion SSH de 30 segundos
+  Objetivo: set admin-ssh-grace-time 30
+  Evidencia: admin-ssh-grace-time=30
+
+[CUMPLE] FortiGate - F-04: Administracion HTTPS: no admitir versiones inferiores a TLS 1.2
+  Objetivo: set admin-https-ssl-versions tlsv1-2
+  Evidencia: admin-https-ssl-versions=tlsv1-2
+
+[CUMPLE] FortiGate - F-05: SSH v1 deshabilitado
+  Objetivo: set admin-ssh-v1 disable
+  Evidencia: admin-ssh-v1=disable
+
+
+Resultado final: 15 controles conformes; 0 incumplimientos; 0 errores.
