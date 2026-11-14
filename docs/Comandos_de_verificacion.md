@@ -21,7 +21,7 @@ show running-config | section line vty
 show running-config | include service timestamps log
 show ip ssh
 ```
-El usuario SSH usado en el laboratorio es `oliver`. No se publican contraseñas ni hashes.
+La autenticación SSH de Cisco utiliza el usuario local `oliver`.
 
 ## FortiGate · Consola GNS3
 ```text
@@ -40,4 +40,4 @@ py -m pip install "netmiko[par4]"
 py .\hardening_cis.py
 ```
 
-En el menú del script: opción **1** para solo auditar; opción **2** para respaldar, corregir y auditar de nuevo. No es necesario aplicar el hardening otra vez para demostrar los resultados que ya constan en los informes.
+El programa cuenta con dos modalidades: **1. Auditoría sin cambios** y **2. Respaldo, aplicación de controles y auditoría posterior**. Las pruebas se documentan en los informes del proyecto.
